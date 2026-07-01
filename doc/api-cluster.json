@@ -1,0 +1,2236 @@
+{
+  "swagger": "2.0",
+  "basePath": "/cluster-api/v1",
+  "paths": {
+    "/cloud/action/associate_printer": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_associate_printer",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PIN"
+            }
+          }
+        ],
+        "tags": [
+          "cloud"
+        ]
+      }
+    },
+    "/cloud/action/setup_associate_printer": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_setup_associate_printer",
+        "tags": [
+          "cloud"
+        ]
+      }
+    },
+    "/cloud/action/sign_out": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_sign_out",
+        "tags": [
+          "cloud"
+        ]
+      }
+    },
+    "/cloud/authentication": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CloudAuthenticationMode"
+            }
+          },
+          "404": {
+            "description": "Authentication mode 'cloud' isn't active"
+          }
+        },
+        "operationId": "get_cloud_authentication",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "cloud"
+        ]
+      }
+    },
+    "/cloud/cloud_connect_flow": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CloudConnectFlowMode"
+            }
+          }
+        },
+        "operationId": "get_cloud_connect_flow",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "cloud"
+        ]
+      }
+    },
+    "/cloud/redirect": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "get_o_auth2_redirect",
+        "tags": [
+          "cloud"
+        ]
+      }
+    },
+    "/debug/match_matrix/{nr}": {
+      "parameters": [
+        {
+          "name": "nr",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MatchResultPerJob"
+              }
+            }
+          }
+        },
+        "summary": "Shows a list of all the last job <-> printer matcher from the scheduler",
+        "operationId": "get_match_matrix",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "debug"
+        ]
+      }
+    },
+    "/debug/schedule/{nr}": {
+      "parameters": [
+        {
+          "name": "nr",
+          "in": "path",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Schedule"
+              }
+            }
+          }
+        },
+        "summary": "Shows a list of all the last job <-> printer matcher from the scheduler",
+        "operationId": "get_schedule",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "debug"
+        ]
+      }
+    },
+    "/materials/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Material"
+              }
+            }
+          }
+        },
+        "summary": "Return a list of all the materials",
+        "operationId": "get_material_list",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "materials"
+        ]
+      },
+      "post": {
+        "responses": {
+          "400": {
+            "description": "File must be provided"
+          }
+        },
+        "operationId": "post_material_list",
+        "parameters": [
+          {
+            "name": "signature_file",
+            "in": "formData",
+            "type": "file"
+          },
+          {
+            "name": "file",
+            "in": "formData",
+            "type": "file",
+            "required": true
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "materials"
+        ]
+      }
+    },
+    "/print_jobs/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PrintJob"
+              }
+            }
+          }
+        },
+        "summary": "Return a list of all current print jobs in the queue",
+        "operationId": "list_print_jobs",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      },
+      "post": {
+        "responses": {
+          "400": {
+            "description": "Bad request, invalid or unsupported g-code file"
+          },
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PrintJob"
+            }
+          }
+        },
+        "summary": "Add a new print job to the queue",
+        "operationId": "create_print_job",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "type": "file",
+            "required": true
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/action/delete": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PrintJobUUIDList"
+            }
+          }
+        },
+        "operationId": "post_print_jobs_action_delete",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PrintJobUUIDList"
+            }
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/history/recently_completed": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/HistoricalPrintJob"
+              }
+            }
+          }
+        },
+        "operationId": "get_history_recently_completed",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/printing": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PrintJob"
+              }
+            }
+          }
+        },
+        "summary": "Return a list of all started print jobs",
+        "operationId": "printing_print_jobs",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/queued": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PrintJob"
+              }
+            }
+          }
+        },
+        "summary": "Return a list of all queued print jobs",
+        "operationId": "queued_print_jobs",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{job_uuid}/action": {
+      "parameters": [
+        {
+          "name": "job_uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "400": {
+            "description": "Cannot perform action on print job"
+          },
+          "405": {
+            "description": "Print job is not printing"
+          },
+          "404": {
+            "description": "Print job was not found"
+          },
+          "204": {
+            "description": "Job action succeeded"
+          }
+        },
+        "operationId": "print_job_perform_action",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PrintJobAction"
+            }
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      },
+      "put": {
+        "responses": {
+          "400": {
+            "description": "Cannot perform action on print job"
+          },
+          "405": {
+            "description": "Print job is not printing"
+          },
+          "404": {
+            "description": "Print job was not found"
+          },
+          "204": {
+            "description": "Job action succeeded"
+          }
+        },
+        "operationId": "put_print_job_perform_action",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PrintJobAction"
+            }
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{job_uuid}/action/duplicate": {
+      "parameters": [
+        {
+          "name": "job_uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_print_job_duplicate_action",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/DuplicatePrintJob"
+            }
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{job_uuid}/action/move": {
+      "parameters": [
+        {
+          "name": "job_uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_print_job_move_action",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PrintJobPosition"
+            }
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{job_uuid}/action/status": {
+      "parameters": [
+        {
+          "name": "job_uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_print_job_status_action",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePrintJobStatus"
+            }
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{uuid}": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "responses": {
+          "404": {
+            "description": "Print job not found"
+          },
+          "204": {
+            "description": "Print job deleted"
+          }
+        },
+        "operationId": "delete_print_job",
+        "tags": [
+          "print_jobs"
+        ]
+      },
+      "put": {
+        "responses": {
+          "404": {
+            "description": "Print job was not found"
+          },
+          "200": {
+            "description": "Job updated!"
+          }
+        },
+        "operationId": "update_a_setting_on_the_print_job",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePrintJob"
+            }
+          }
+        ],
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{uuid}/move_to_position": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "put": {
+        "responses": {
+          "404": {
+            "description": "Print job was not found"
+          },
+          "200": {
+            "description": "Job updated!"
+          }
+        },
+        "description": "Use a POST on /{uuid}/action/move instead",
+        "operationId": "update_position_of_print_job",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PrintJobPosition"
+            }
+          }
+        ],
+        "deprecated": true,
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{uuid}/preview_image": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "preview_print_job",
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/print_jobs/{uuid}/update": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "put": {
+        "responses": {
+          "404": {
+            "description": "Print job was not found"
+          },
+          "200": {
+            "description": "Job updated!"
+          }
+        },
+        "description": "Use /print_jobs/{uuid} instead",
+        "operationId": "put_print_job_update",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePrintJob"
+            }
+          }
+        ],
+        "deprecated": true,
+        "tags": [
+          "print_jobs"
+        ]
+      }
+    },
+    "/printers/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Printer"
+              }
+            }
+          }
+        },
+        "summary": "Return a list of all the connected printers",
+        "operationId": "list_printers",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "printers"
+        ]
+      }
+    },
+    "/printers/{uuid}": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Printer"
+            }
+          }
+        },
+        "operationId": "update_printer",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePrinter"
+            }
+          },
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "printers"
+        ]
+      }
+    },
+    "/printers/{uuid}/action/identify": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_printer_identify_action",
+        "tags": [
+          "printers"
+        ]
+      }
+    },
+    "/printers/{uuid}/action/update_firmware": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_printer_update_firmware_action",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/update_firmware"
+            }
+          }
+        ],
+        "tags": [
+          "printers"
+        ]
+      }
+    },
+    "/printers/{uuid}/identify": {
+      "parameters": [
+        {
+          "name": "uuid",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "description": "Use /{uuid}/action/identify instead.",
+        "operationId": "post_printer_identification",
+        "deprecated": true,
+        "tags": [
+          "printers"
+        ]
+      }
+    },
+    "/settings/{identifier}": {
+      "parameters": [
+        {
+          "description": "Settings key. One of 'data_collection_enabled'.",
+          "name": "identifier",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "get_settings",
+        "tags": [
+          "settings"
+        ]
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "put_settings",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Settings"
+            }
+          }
+        ],
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/system/authentication_mode/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/AuthenticationMode"
+            }
+          }
+        },
+        "operationId": "authentication_mode",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/system/authentication_mode/action/setup_cloud": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_authentication_mode_action_setup_cloud",
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/system/authentication_mode/action/setup_open": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "post_authentication_mode_action_setup_open",
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/system/current_user": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/CurrentUser"
+            }
+          }
+        },
+        "operationId": "get_current_user",
+        "parameters": [
+          {
+            "name": "X-Fields",
+            "in": "header",
+            "type": "string",
+            "format": "mask",
+            "description": "An optional fields mask"
+          }
+        ],
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/system/detach": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "detach_printer",
+        "parameters": [
+          {
+            "name": "payload",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/detach"
+            }
+          }
+        ],
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/system/host_name/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Get the friendly name of the group host printer which this printer belongs to",
+        "operationId": "get_host_name",
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/system/host_unique_name/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Get the host name of the group host printer which this printer belongs to",
+        "operationId": "get_host_unique_name",
+        "tags": [
+          "system"
+        ]
+      }
+    },
+    "/system/latest_firmware_versions/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "get_latest_firmware_versions",
+        "tags": [
+          "system"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Ultimaker - Connect API",
+    "version": "0.2",
+    "description": "This API exposes endpoints to interact with the Ultimaker Digital Factory software"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "default",
+      "description": "Default namespace"
+    },
+    {
+      "name": "debug",
+      "description": "Endpoint for interaction with the print job queue"
+    },
+    {
+      "name": "print_jobs",
+      "description": "Endpoint for interaction with the print job queue or with specific jobs in it."
+    },
+    {
+      "name": "printers",
+      "description": "Endpoint for interaction with the printers"
+    },
+    {
+      "name": "cloud",
+      "description": "Endpoint for part of the Cloud/OAuth2 authentication process"
+    },
+    {
+      "name": "settings",
+      "description": "Endpoint for at runtime configuration"
+    },
+    {
+      "name": "system",
+      "description": "System configuration"
+    },
+    {
+      "name": "materials",
+      "description": "Endpoint for interaction with the materials"
+    }
+  ],
+  "definitions": {
+    "MatchResultPerJob": {
+      "properties": {
+        "print_job": {
+          "$ref": "#/definitions/MinimalPrintJob"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MatchResultPerPrinter"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "MinimalPrintJob": {
+      "required": [
+        "name",
+        "uuid"
+      ],
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "Uniquely identifies the print job"
+        },
+        "name": {
+          "type": "string",
+          "description": "The human readable filename"
+        }
+      },
+      "type": "object"
+    },
+    "MatchResultPerPrinter": {
+      "properties": {
+        "printer": {
+          "$ref": "#/definitions/MinimalPrinter"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DebugMatchResult"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "MinimalPrinter": {
+      "required": [
+        "friendly_name",
+        "unique_name"
+      ],
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "The identifier"
+        },
+        "unique_name": {
+          "type": "string",
+          "description": "The printer's unique name"
+        },
+        "friendly_name": {
+          "type": "string",
+          "description": "Human readable name"
+        }
+      },
+      "type": "object"
+    },
+    "DebugMatchResult": {
+      "required": [
+        "debug_message"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The field type enum"
+        },
+        "origin": {
+          "type": "string",
+          "description": "The origin of the match result"
+        },
+        "debug_message": {
+          "type": "string",
+          "description": "Message string of the match result"
+        },
+        "score": {
+          "type": "integer",
+          "description": "low is good!"
+        },
+        "severity": {
+          "type": "integer",
+          "description": "enum values for different severities"
+        }
+      },
+      "type": "object"
+    },
+    "Schedule": {
+      "properties": {
+        "printer": {
+          "$ref": "#/definitions/MinimalPrinter"
+        },
+        "jobs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MinimalPrintJob"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "PrintJob": {
+      "required": [
+        "force",
+        "machine_variant",
+        "name",
+        "started",
+        "time_elapsed",
+        "time_total",
+        "uuid"
+      ],
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "The Unique identifier of the print job.",
+          "pattern": "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}"
+        },
+        "name": {
+          "type": "string",
+          "description": "The human readable name of this job. By default, the name of the provided file is used with all (known) suffixes are stripped"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The moment this print job was created on this cluster"
+        },
+        "started": {
+          "type": "boolean",
+          "description": "Whether the job has been started"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the print job",
+          "example": "sent_to_printer",
+          "enum": [
+            "sent_to_printer",
+            "pre_print",
+            "printing",
+            "pausing",
+            "paused",
+            "resuming",
+            "post_print",
+            "wait_cleanup",
+            "wait_user_action",
+            "aborted_wait_cleanup",
+            "aborted_post_print",
+            "aborted_wait_user_action",
+            "failed_wait_cleanup",
+            "failed_post_print",
+            "failed_wait_user_action",
+            "queued",
+            "none",
+            "finished",
+            "aborted",
+            "failed"
+          ]
+        },
+        "printer_uuid": {
+          "type": "string",
+          "description": "Printer uuid associated to this job"
+        },
+        "configuration": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrintCoreConfiguration"
+          }
+        },
+        "machine_variant": {
+          "type": "string",
+          "description": "Target machine variant for the job",
+          "example": "Ultimaker 3",
+          "enum": [
+            "Ultimaker 3",
+            "Ultimaker 3 Extended",
+            "Ultimaker S5",
+            "Ultimaker S7",
+            "Ultimaker S3",
+            "Ultimaker Factor 4",
+            "Ultimaker Colorado"
+          ]
+        },
+        "constraints": {
+          "$ref": "#/definitions/PrintJobConstraint"
+        },
+        "time_elapsed": {
+          "type": "integer",
+          "description": "Current elapsed print time in seconds."
+        },
+        "time_total": {
+          "type": "integer",
+          "description": "Current estimated total print time in seconds."
+        },
+        "last_seen": {
+          "type": "number",
+          "description": "Seconds since the print job was last checked"
+        },
+        "network_error_count": {
+          "type": "integer",
+          "description": "Number of failed connection attempts to check the job status"
+        },
+        "force": {
+          "type": "boolean",
+          "description": "A boolean indicating whether the job ignore matching criteria such as material type, this only works in combination with a constraint to a specific printer"
+        },
+        "assigned_to": {
+          "type": "string",
+          "description": "Printer uuid of printer reserved for this job"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Name of the person who submitted the job"
+        },
+        "build_plate": {
+          "description": "The build plate (type) this job needs to be printed on.",
+          "$ref": "#/definitions/BuildPlate"
+        },
+        "configuration_changes_required": {
+          "type": "array",
+          "description": "List of configuration changes the printer this job is associated with needs to make in order to be able to print this job",
+          "items": {
+            "$ref": "#/definitions/ConfigurationChange"
+          }
+        },
+        "impediments_to_printing": {
+          "type": "array",
+          "description": "A list of reasons that prevent this job from being printed on the associated printer",
+          "items": {
+            "$ref": "#/definitions/MatchResult"
+          }
+        },
+        "compatible_machine_families": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Family names of machines suitable for this print job",
+            "example": "Ultimaker 3",
+            "enum": [
+              "Ultimaker 3",
+              "Ultimaker 3 Extended",
+              "Ultimaker S5",
+              "Ultimaker S7",
+              "Ultimaker S3",
+              "Ultimaker Factor 4",
+              "Ultimaker Colorado"
+            ]
+          }
+        },
+        "printed_on_uuid": {
+          "type": "string",
+          "description": "UUID of the printer used to print this job."
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time when this print job was deleted."
+        },
+        "cloud_job_id": {
+          "type": "string",
+          "description": "Cloud job ID if job originates from the Ultimaker cloud."
+        }
+      },
+      "type": "object"
+    },
+    "PrintCoreConfiguration": {
+      "required": [
+        "extruder_index"
+      ],
+      "properties": {
+        "extruder_index": {
+          "type": "integer",
+          "description": "Extruder index"
+        },
+        "print_core_id": {
+          "type": "string",
+          "description": "Print Core ID"
+        },
+        "material": {
+          "$ref": "#/definitions/Material"
+        },
+        "temperature": {
+          "$ref": "#/definitions/Temperature"
+        }
+      },
+      "type": "object"
+    },
+    "Material": {
+      "properties": {
+        "guid": {
+          "type": "string",
+          "description": "Material GUID"
+        },
+        "brand": {
+          "type": "string",
+          "description": "Material brand"
+        },
+        "material": {
+          "type": "string",
+          "description": "Material kind"
+        },
+        "color": {
+          "type": "string",
+          "description": "Material color"
+        },
+        "version": {
+          "type": "integer",
+          "description": "Version of the material"
+        },
+        "density": {
+          "type": "number",
+          "description": "The density of the material in gram per cubic cm"
+        }
+      },
+      "type": "object"
+    },
+    "Temperature": {
+      "properties": {
+        "current": {
+          "type": "number",
+          "description": "Current temperature."
+        },
+        "target": {
+          "type": "number",
+          "description": "Target temperature."
+        }
+      },
+      "type": "object"
+    },
+    "PrintJobConstraint": {
+      "properties": {
+        "require_printer_name": {
+          "type": "string",
+          "description": "Force this job to be printed on a specific printer by its unique host name."
+        }
+      },
+      "type": "object"
+    },
+    "BuildPlate": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "The build plate type currently loaded in this printer."
+        },
+        "temperature": {
+          "$ref": "#/definitions/Temperature"
+        }
+      },
+      "type": "object"
+    },
+    "ConfigurationChange": {
+      "required": [
+        "origin_id",
+        "target_id",
+        "type_of_change"
+      ],
+      "properties": {
+        "type_of_change": {
+          "type": "string",
+          "description": "The type of configuration change.",
+          "example": "material_change",
+          "enum": [
+            "material_change",
+            "material_insert",
+            "print_core_change",
+            "buildplate_change"
+          ]
+        },
+        "index": {
+          "type": "integer",
+          "description": "The hotend slot or extruder index to change"
+        },
+        "target_id": {
+          "type": "string",
+          "description": "Target material guid or hotend id"
+        },
+        "origin_id": {
+          "type": "string",
+          "description": "Original/current material guid or hotend id"
+        },
+        "target_name": {
+          "type": "string",
+          "description": "Target material name or hotend id"
+        },
+        "origin_name": {
+          "type": "string",
+          "description": "Original/current material name or hotend id"
+        }
+      },
+      "type": "object"
+    },
+    "MatchResult": {
+      "required": [
+        "severity",
+        "translation_key"
+      ],
+      "properties": {
+        "translation_key": {
+          "type": "string",
+          "description": "A string indicating A reason the print cannot be printed, such as 'does_not_fit_in_build_volume'"
+        },
+        "severity": {
+          "type": "string",
+          "description": "A number indicating the severity of the problem, with higher being more severe"
+        }
+      },
+      "type": "object"
+    },
+    "PrintJobUUIDList": {
+      "properties": {
+        "uuids": {
+          "type": "array",
+          "description": "UUIDs of affected/targeted print_jobs",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "UpdatePrintJob": {
+      "properties": {
+        "force": {
+          "type": "boolean",
+          "description": "A boolean indicating whether the job ignore matching criteria such as material type, this only works in combination with a constraint to a specific printer"
+        }
+      },
+      "type": "object"
+    },
+    "PrintJobPosition": {
+      "required": [
+        "to_position"
+      ],
+      "properties": {
+        "to_position": {
+          "type": "integer",
+          "description": "Set position of print job; only position 0 is supported",
+          "minimum": 0
+        },
+        "list": {
+          "type": "string",
+          "description": "The name of the print job list to operate on. Defaults to 'queued'.",
+          "example": "queued",
+          "enum": [
+            "queued"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "UpdatePrintJobStatus": {
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "What action should be performed on the status of the print job?",
+          "example": "pause",
+          "enum": [
+            "pause",
+            "print",
+            "abort"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "DuplicatePrintJob": {
+      "required": [
+        "quantity"
+      ],
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "description": "How often should the job be duplicated",
+          "minimum": 1
+        }
+      },
+      "type": "object"
+    },
+    "PrintJobAction": {
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "description": "In the case of the duplicate command, the number of duplicates needed."
+        },
+        "action": {
+          "type": "string",
+          "description": "Not all actions can be done at every state. The following states should be taken into account- abort is always allowed.- print is only allowed when the print is paused.- pause is only allowed when the print is active- reprint is only allowed when the print is completed.- duplicate is only allowed when the print is not printing (e.g. not assigned to a printer)",
+          "example": "abort",
+          "enum": [
+            "abort",
+            "print",
+            "pause",
+            "reprint",
+            "duplicate"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "HistoricalPrintJob": {
+      "required": [
+        "name",
+        "owner",
+        "time_total"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "description": "The human readable filename"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Owner of the print job"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The creation time of the print job"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The deletion time of the print job"
+        },
+        "status": {
+          "type": "string",
+          "description": "The last status of the print job",
+          "example": "sent_to_printer",
+          "enum": [
+            "sent_to_printer",
+            "pre_print",
+            "printing",
+            "pausing",
+            "paused",
+            "resuming",
+            "post_print",
+            "wait_cleanup",
+            "wait_user_action",
+            "aborted_wait_cleanup",
+            "aborted_post_print",
+            "aborted_wait_user_action",
+            "failed_wait_cleanup",
+            "failed_post_print",
+            "failed_wait_user_action",
+            "queued",
+            "none",
+            "finished",
+            "aborted",
+            "failed"
+          ]
+        },
+        "job_material_1_guid": {
+          "type": "string",
+          "description": "Material 1 GUID as required by the print job gcode"
+        },
+        "job_printcore_1": {
+          "type": "string",
+          "description": "PrintCore  as required by the print job gcode"
+        },
+        "job_material_amount_1": {
+          "type": "integer"
+        },
+        "job_material_2_guid": {
+          "type": "string"
+        },
+        "job_printcore_2": {
+          "type": "string"
+        },
+        "job_material_amount_2": {
+          "type": "integer"
+        },
+        "job_buildplate": {
+          "type": "string"
+        },
+        "estimated_time_total": {
+          "type": "integer"
+        },
+        "force": {
+          "type": "boolean"
+        },
+        "machine_variant": {
+          "type": "string",
+          "example": "Ultimaker 3",
+          "enum": [
+            "Ultimaker 3",
+            "Ultimaker 3 Extended",
+            "Ultimaker S5",
+            "Ultimaker S7",
+            "Ultimaker S3",
+            "Ultimaker Factor 4",
+            "Ultimaker Colorado"
+          ]
+        },
+        "printer_uuid": {
+          "type": "string"
+        },
+        "time_total": {
+          "type": "integer",
+          "description": "Final elapsed print time in seconds."
+        },
+        "print_start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when printing started"
+        },
+        "print_end_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when printing ended"
+        },
+        "printer_material_1_guid": {
+          "type": "string",
+          "description": "Material 1 GUID from the printer"
+        },
+        "printer_printcore_1": {
+          "type": "string",
+          "description": "PrintCore 1 from the printer"
+        },
+        "printer_material_2_guid": {
+          "type": "string"
+        },
+        "printer_printcore_2": {
+          "type": "string"
+        },
+        "printer_buildplate": {
+          "type": "string"
+        },
+        "compatible_machine_families": {
+          "type": "string",
+          "description": "Comma separated list of all machine families that can print this job"
+        },
+        "require_printer_name": {
+          "type": "string",
+          "description": "Host name of the printer this printer is restricted to (if any)"
+        },
+        "cloud_job_id": {
+          "type": "string",
+          "description": "The print job assigned by the Ultimaker Cloud"
+        }
+      },
+      "type": "object"
+    },
+    "Printer": {
+      "required": [
+        "firmware_update_status",
+        "friendly_name",
+        "ip_address",
+        "is_host",
+        "latest_available_firmware",
+        "unique_name",
+        "uuid"
+      ],
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "The identifier",
+          "pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"
+        },
+        "status": {
+          "type": "string",
+          "description": "Printer status",
+          "example": "idle",
+          "enum": [
+            "idle",
+            "printing",
+            "pre_print",
+            "maintenance",
+            "unreachable",
+            "unknown",
+            "error"
+          ]
+        },
+        "unique_name": {
+          "type": "string",
+          "description": "The printer's unique name"
+        },
+        "ip_address": {
+          "type": "string",
+          "description": "The printer's last known IP address"
+        },
+        "is_host": {
+          "type": "boolean",
+          "description": "Indicates if this printer is the group host or not"
+        },
+        "firmware_version": {
+          "type": "string",
+          "description": "Firmware version"
+        },
+        "friendly_name": {
+          "type": "string",
+          "description": "Human readable name"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not the printer may receive print jobs"
+        },
+        "reserved_by": {
+          "type": "string",
+          "description": "If this printer is reserved by a print job, then this field holds the job's UUID"
+        },
+        "machine_variant": {
+          "type": "string",
+          "description": "Printer machine variant",
+          "example": "Ultimaker 3",
+          "enum": [
+            "Ultimaker 3",
+            "Ultimaker 3 Extended",
+            "Ultimaker S5",
+            "Ultimaker S7",
+            "Ultimaker S3",
+            "Ultimaker Factor 4",
+            "Ultimaker Colorado"
+          ]
+        },
+        "build_plate": {
+          "$ref": "#/definitions/BuildPlate"
+        },
+        "air_manager": {
+          "$ref": "#/definitions/AirManager"
+        },
+        "material_station": {
+          "$ref": "#/definitions/MaterialStation"
+        },
+        "configuration": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrintCoreConfiguration"
+          }
+        },
+        "maintenance_required": {
+          "type": "boolean",
+          "description": "Does the printer require any form of maintenance"
+        },
+        "firmware_update_status": {
+          "type": "string",
+          "description": "Status of the firmware update",
+          "example": "up_to_date",
+          "enum": [
+            "up_to_date",
+            "pending_update",
+            "update_available",
+            "update_in_progress",
+            "update_failed",
+            "update_impossible"
+          ]
+        },
+        "latest_available_firmware": {
+          "type": "string",
+          "description": "Version of the latest available firmware"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PrinterError"
+          }
+        },
+        "faults": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Fault"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "AirManager": {
+      "required": [
+        "filter_age",
+        "filter_max_age",
+        "supported"
+      ],
+      "properties": {
+        "supported": {
+          "type": "boolean",
+          "description": "Set to true if this printer model supports the installation of the Air Manager"
+        },
+        "status": {
+          "type": "string",
+          "description": "Air Manager status",
+          "example": "available",
+          "enum": [
+            "available",
+            "unavailable",
+            "error",
+            "installing_firmware"
+          ]
+        },
+        "filter_status": {
+          "type": "string",
+          "description": "Air Manager filter status",
+          "example": "peak_performance",
+          "enum": [
+            "peak_performance",
+            "replacement_near",
+            "replacement_required",
+            "unknown",
+            "missing"
+          ]
+        },
+        "filter_age": {
+          "type": "integer",
+          "description": "Filter capacity used (hours)"
+        },
+        "filter_max_age": {
+          "type": "integer",
+          "description": "Filter capacity total (hours)"
+        }
+      },
+      "type": "object"
+    },
+    "MaterialStation": {
+      "required": [
+        "supported"
+      ],
+      "properties": {
+        "supported": {
+          "type": "boolean",
+          "description": "Set to true if this printer model supports the installation of the Material Station"
+        },
+        "status": {
+          "type": "string",
+          "description": "Material Station status",
+          "example": "available",
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        },
+        "material_slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MaterialStationSlot"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "MaterialStationSlot": {
+      "required": [
+        "compatible",
+        "extruder_index",
+        "material_remaining",
+        "print_core_id",
+        "slot_index"
+      ],
+      "properties": {
+        "slot_index": {
+          "type": "integer",
+          "description": "Slot index. First slot is number 0."
+        },
+        "extruder_index": {
+          "type": "integer",
+          "description": "Extruder index. First extruder is number 0."
+        },
+        "print_core_id": {
+          "type": "string",
+          "description": "Print Core ID if the slot is loaded with a material."
+        },
+        "material": {
+          "$ref": "#/definitions/Material"
+        },
+        "material_empty": {
+          "type": "boolean",
+          "description": "True if no more filament is available"
+        },
+        "material_remaining": {
+          "type": "number",
+          "description": "Amount of material left of the spool. Ranges from 0 meaning empty to 1 meaning full. -1 indicates missing data."
+        },
+        "compatible": {
+          "type": "boolean",
+          "description": "Set to true if this material and print core combination is compatible."
+        }
+      },
+      "type": "object"
+    },
+    "PrinterError": {
+      "required": [
+        "code",
+        "uuid"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Error code",
+          "example": "air_manager_fan_speed_unexpected",
+          "enum": [
+            "air_manager_fan_speed_unexpected",
+            "air_manager_filter_missing",
+            "air_manager_filter_needs_replacement",
+            "air_manager_missing",
+            "air_manager_not_configured",
+            "build_chamber_temp_critical",
+            "build_chamber_too_hot"
+          ]
+        },
+        "uuid": {
+          "type": "string",
+          "description": "UUID for this error",
+          "pattern": "^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$"
+        }
+      },
+      "type": "object"
+    },
+    "Fault": {
+      "required": [
+        "code",
+        "message",
+        "severity",
+        "timestamp",
+        "uuid"
+      ],
+      "properties": {
+        "severity": {
+          "type": "string",
+          "description": "These log levels are described in https://confluence.ultimaker.com/display/SD/20180903-2+Logging"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "The date and time when this warning was created in ISO 8601."
+        },
+        "message": {
+          "type": "string",
+          "description": "Human readable description of the warning. This is intended for developer eyes."
+        },
+        "uuid": {
+          "type": "string",
+          "description": "UUID to identify this warning instance."
+        },
+        "code": {
+          "type": "string",
+          "description": "A short \"error code\" which identifies this kind of warning."
+        },
+        "data": {
+          "type": "object",
+          "description": "Error specific JSON"
+        }
+      },
+      "type": "object"
+    },
+    "UpdatePrinter": {
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Whether or not to allow print jobs to be sent to the printer"
+        },
+        "name": {
+          "type": "string",
+          "description": "New name of the printer"
+        }
+      },
+      "type": "object"
+    },
+    "update_firmware": {
+      "required": [
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Should a firmware update be started / stopped?",
+          "example": "start",
+          "enum": [
+            "start",
+            "stop"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "CloudAuthenticationMode": {
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "",
+          "example": "disconnected",
+          "enum": [
+            "disconnected",
+            "connecting",
+            "not_configured",
+            "awaiting_pin",
+            "connected"
+          ]
+        },
+        "oauth_login_url": {
+          "type": "string",
+          "description": "The base OAuth URL to use for user logins"
+        },
+        "oauth_login_url_disconnect": {
+          "type": "string",
+          "description": "The base OAuth URL to use for user logins during the disconnect flow."
+        },
+        "associated_account_name": {
+          "type": "string",
+          "description": "The name of the Cloud account used when associating Ultimaker Connect with the cloud"
+        }
+      },
+      "type": "object"
+    },
+    "CloudConnectFlowMode": {
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "The cloud connection flow style this host printer supports.",
+          "example": "lan_connect_based",
+          "enum": [
+            "lan_connect_based",
+            "pin_based"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "PIN": {
+      "properties": {
+        "pin": {
+          "type": "string",
+          "description": "PIN entered by the user"
+        }
+      },
+      "type": "object"
+    },
+    "Settings": {
+      "required": [
+        "payload"
+      ],
+      "properties": {
+        "payload": {
+          "type": "object",
+          "description": "Type depends on the identifier being passed in."
+        }
+      },
+      "type": "object"
+    },
+    "AuthenticationMode": {
+      "properties": {
+        "mode": {
+          "type": "string",
+          "description": "The authentication mode being used by the whole system.",
+          "example": "open",
+          "enum": [
+            "open",
+            "cloud"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "CurrentUser": {
+      "required": [
+        "valid"
+      ],
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "description": "True if the current user is valid/authenticated"
+        },
+        "user_id": {
+          "type": "string",
+          "description": "The user's unique ID"
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's name"
+        },
+        "profile_image_url": {
+          "type": "string",
+          "description": "URL to a profile image"
+        },
+        "account_management_url": {
+          "type": "string",
+          "description": "URL to manage the user's account"
+        }
+      },
+      "type": "object"
+    },
+    "detach": {
+      "required": [
+        "authorization_id",
+        "authorization_key"
+      ],
+      "properties": {
+        "authorization_id": {
+          "type": "string",
+          "description": ""
+        },
+        "authorization_key": {
+          "type": "string",
+          "description": ""
+        }
+      },
+      "type": "object"
+    }
+  },
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    },
+    "InvalidUsage": {}
+  }
+}

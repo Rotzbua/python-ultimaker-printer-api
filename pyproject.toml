@@ -1,0 +1,149 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [ "setuptools>=77.0.3" ]
+packages = [
+  "ultimaker",
+]
+
+[project]
+name = "ultimaker-printer-api"
+description = "An Ultimaker Printer API client implementation in Python"
+readme = "README.md"
+keywords = [
+  "3D printing",
+  "API",
+  "management",
+  "Ultimaker",
+]
+license = { file = "LICENSE" }
+authors = [
+  { name = "Sameer Puri", email = "purisame@spuri.io" },
+]
+requires-python = ">=3.12"
+classifiers = [
+  # https://pypi.python.org/pypi?%3Aaction=list_classifiers
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Manufacturing",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dynamic = [
+  "version",
+]
+dependencies = [
+  "imagehash==4.3.2",
+  "pillow==12.2.0",
+  "requests==2.34.2",
+  "uuid==1.30",
+  "zeroconf==0.150.0",
+]
+urls.repository = "https://github.com/vanderbilt-design-studio/python-ultimaker-printer-api"
+
+[dependency-groups]
+check = [
+  "mypy==2.1.0",
+  "pre-commit==4.6.0",
+  "types-pillow==10.2.0.20240822",
+  "types-requests==2.33.0.20260518",
+  "types-urllib3==1.26.25.14",
+  "typing-extensions==4.15.0",
+]
+
+[tool.setuptools]
+# dynamic.version = { attr = "ultimaker-printer-api.__version__" }
+
+[tool.ruff]
+line-length = 150
+lint.extend-select = [
+  # flake8-builtins
+  "A",
+  # flake8-annotations
+  "ANN",
+  # flake8-unused-arguments
+  "ARG",
+  # flake8-bugbear
+  "B",
+  # flake8-comprehensions
+  "C4",
+  # mccabe
+  "C90",
+  # flake8-datetimez
+  "DTZ",
+  # pydocstyle
+  # "D",
+  # pycodestyle errors
+  "E",
+  # Pyflakes
+  "F",
+  # flake8-future-annotations
+  "FA",
+  # flynt
+  "FLY",
+  # refurb
+  "FURB",
+  # isort
+  "I",
+  # flake8-implicit-str-concat
+  "ISC",
+  # flake8-logging
+  "LOG",
+  # pep8-naming
+  "N",
+  # Perflint
+  "PERF",
+  # pygrep-hooks
+  "PGH",
+  # flake8-pie
+  "PIE",
+  # pylint
+  "PL",
+  # flake8-use-pathlib
+  "PTH",
+  # flake8-pyi
+  "PYI",
+  # flake8-quotes
+  "Q",
+  # flake8-return
+  "RET",
+  # flake8-raise
+  "RSE",
+  # Ruff-specific rules
+  "RUF",
+  # flake8-bandit
+  "S",
+  # flake8-simplify
+  "SIM",
+  # flake8-self
+  "SLF",
+  # flake8-slots
+  "SLOT",
+  # flake8-debugger
+  "T10",
+  # flake8-type-checking
+  "TC",
+  # pyupgrade
+  "UP",
+  # pycodestyle warnings
+  "W",
+  # flake8-2020
+  "YTT",
+]
+lint.ignore = [
+  "ARG002", # fixme
+  "DTZ007", # fixme
+  "F401",   # imported but unused
+  "F821",   # fixme
+  "N806",   # fixme
+]
+
+[tool.docformatter]
+wrap-summaries = 0
+wrap-descriptions = 0
+
+[tool.pyproject-fmt]
+keep_full_version = true

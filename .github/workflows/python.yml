@@ -1,0 +1,36 @@
+name: python test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+
+jobs:
+  typing:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - '3.12'
+          - '3.13'
+          - '3.14'
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install dependencies.
+        run: |
+          pip install .
+          # pip install --group check
+
+      - name: Run test.
+        run: |
+          python -m unittest
+
+      - name: Run lint checks.
+        uses: pre-commit/action@v3.0.1
